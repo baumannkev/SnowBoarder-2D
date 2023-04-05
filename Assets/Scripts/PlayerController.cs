@@ -21,7 +21,11 @@ public class PlayerController : MonoBehaviour
     public float rotationWeight = 10.0f;
     public float airTimeWeight = 1.0f;
     public float timeWeight = 1.0f;
-    
+
+    public float playerSpeed;
+    public Vector2 playerVelocity;
+
+    public float maxVelocity = 0f;
     public float totalPoints;
 
     public Timer timer;
@@ -44,6 +48,15 @@ public class PlayerController : MonoBehaviour
             RotatePlayer();
             RespondToBoost();
             TrackRotations();
+            GetPlayerVelocity();
+            GetPlayerSpeed();
+            
+            float currentVelocityMagnitude = rb2d.velocity.magnitude;
+            if (currentVelocityMagnitude > maxVelocity)
+            {
+                maxVelocity = currentVelocityMagnitude;
+            }
+            
         }
         
         // if (timer.isFinished)
@@ -51,6 +64,21 @@ public class PlayerController : MonoBehaviour
             CalculateTotalPoints();
 
         // }
+    }
+
+    public float GetMaxVelocity()
+    {
+        return maxVelocity;
+    }
+    
+    public Vector2 GetPlayerVelocity()
+    {
+        return rb2d.velocity;
+    }
+
+    public float GetPlayerSpeed()
+    {
+        return rb2d.velocity.magnitude;
     }
     
     private void CalculateTotalPoints()
